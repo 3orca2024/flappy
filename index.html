@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flappy Duck</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #a0e7e5;
+      font-family: sans-serif;
+    }
+
+    #game-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #fdf6ec, #fcd5ce);
+    }
+
+    #duck {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-color: yellow;
+      border-radius: 50%;
+      top: 50%;
+      left: 100px;
+    }
+
+    .pipe {
+      position: absolute;
+      width: 60px;
+      background-color: #6c757d;
+    }
+
+    #score {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <div id="duck"></div>
+    <div id="score">Score: 0</div>
+  </div>
+
+  <script>
+    const duck = document.getElementById("duck");
+    const gameContainer = document.getElementById("game-container");
+    const scoreDisplay = document.getElementById("score");
+
+    let duckY = 200;
+    let velocity = 0;
+    let gravity = 0.6;
+    let score = 0;
+    let pipes = [];
+
+    function jump() {
+      velocity = -10;
+    }
+
+    document.addEventListener("keydown", jump);
+    document.addEventListener("touchstart", jump);
+
+    function createPipe() {
+      const gap = 150;
+      const topHeight = Math.floor(Math.random() * (window.innerHeight - gap));
+      const bottomHeight = window.innerHeight - topHeight - gap;
+
+      const topPipe = document.createElement("div");
+      topPipe.classList.add("pipe");
+      topPipe.style.height = `${topHeight}px`;
+      topPipe.style.top = "0px";
+      topPipe.style.left = "100vw";
+
+      const bottomPipe = document.createElement("div");
+      bottomPipe.classList.add("pipe");
+      bottomPipe.style.height = `${bottomHeight}px`;
+      bottomPipe.style.bottom = "0px";
+      bottomPipe.style.left = "100vw";
+
+      gameContainer.appendChild(topPipe);
+      gameContainer.appendChild(bottomPipe);
+
+      pipes.push({ top: topPipe, bottom: bottomPipe, x: window.innerWidth });
+    }
+
+    function update() {
+      velocity += gravity;
+      duckY += velocity;
+      duck.style.top = `${duckY}px`;
+
+      pipes.forEach(pipe => {
+        pipe.x -= 4;
+        pipe.top.style.left = `${pipe.x}px`;
+        pipe.bottom.style.left = `${pipe.x}px`;
+
+        if (pipe.x + 60 < 100 && !pipe.passed) {
+          score++;
+          scoreDisplay.textContent = `Score: ${score}`;
+          pipe.passed = true;
+        }
+
+        const duckRect = duck.getBoundingClientRect();
+        const topRect = pipe.top.getBoundingClientRect();
+        const bottomRect = pipe.bottom.getBoundingClientRect();
+
+        if (
+          duckRect.top < topRect.bottom ||
+          duckRect.bottom > bottomRect.top ||
+          duckRect.top < 0 ||
+          duckRect.bottom > window.innerHeight
+        ) {
+          alert("Game Over! Final Score: " + score);
+          window.location.reload();
+        }
+      });
+
+      requestAnimationFrame(update);
+    }
+
+    setInterval(createPipe, 2000);
+    update();
+  </script>
+</body>
+</html>
