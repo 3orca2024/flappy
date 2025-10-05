@@ -97,20 +97,27 @@
       avatarDisplay.textContent = this.value;
     });
 
-    // Climb Queen
+    // Climb Queen (tap to jump)
     function startClimb() {
       const canvas = document.getElementById("climbCanvas");
       const ctx = canvas.getContext("2d");
       let y = 350;
+      let velocity = 0;
+      const gravity = 0.5;
+      const jumpPower = -10;
       const avatar = avatarDisplay.textContent;
-      document.onkeydown = e => {
-        if (e.key === "ArrowUp") y -= 30;
+
+      canvas.onclick = () => {
+        velocity = jumpPower;
       };
+
       const climb = setInterval(() => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.font = "30px Arial";
         ctx.fillText(avatar, 80, y);
-        y += 5;
+        velocity += gravity;
+        y += velocity;
+
         if (y < 20) {
           alert("You reached the top!");
           clearInterval(climb);
@@ -119,7 +126,7 @@
           alert("You fell!");
           clearInterval(climb);
         }
-      }, 100);
+      }, 30);
     }
 
     // Slalom Dash
@@ -171,13 +178,20 @@
       }, 1000);
     }
 
-    // Volley Rally
+    // Volley Rally (click to bounce)
     function startVolley() {
       const canvas = document.getElementById("volleyCanvas");
       const ctx = canvas.getContext("2d");
       let ballY = 150;
-      let ballSpeed = 3;
+      let velocity = 0;
+      const gravity = 0.5;
+      const bouncePower = -10;
       let score = 0;
+
+      canvas.onclick = () => {
+        velocity = bouncePower;
+        score++;
+      };
 
       const volley = setInterval(() => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -187,18 +201,20 @@
         ctx.fill();
         ctx.font = "20px Arial";
         ctx.fillText("Score: " + score, 10, 20);
-        ballY += ballSpeed;
-        if (ballY > 285 || ballY < 15) {
-          ballSpeed *= -1;
-          score++;
+
+        velocity += gravity;
+        ballY += velocity;
+
+        if (ballY > 285) {
+          alert("You missed! Final score: " + score);
+          clearInterval(volley);
         }
         if (score >= 20) {
           alert("You win!");
           clearInterval(volley);
         }
-      }, 100);
+      }, 30);
     }
   </script>
 </body>
 </html>
-
