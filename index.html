@@ -1,117 +1,242 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Parker's Sports Arcade</title>
+  <title>Parker's Sports Arcade 🎀</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #fff0f5, #e0f7fa);
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      background-color: #ff69b4;
+      color: white;
+      padding: 20px;
+      margin: 0;
+    }
+    canvas {
+      border: 3px solid #ff69b4;
+      border-radius: 10px;
+      margin: 10px;
+      background-color: #ffffff;
+    }
+    button {
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    button:hover {
+      background-color: #ff85c1;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    .section {
+      padding: 20px;
+      margin: 20px;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 10px #ccc;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
 </head>
 <body>
-  <h1>Parker's Sports Arcade</h1>
+  <h1>Parker's Sports Arcade 🎀</h1>
 
-  <h2>About Me</h2>
-  <p>Hi! I'm Parker Champlin, a middle schooler who loves climbing, skiing, volleyball, and softball. Try out my games below!</p>
+  <div class="section">
+    <h2>💖 About Me</h2>
+    <p>Hi! I'm <strong>Parker Champlin</strong>, a middle schooler who loves climbing 🧗‍♀️, skiing ⛷️, volleyball 🏐, and softball ⚾. This arcade is my sporty sparkle zone — pick your avatar and play!</p>
+  </div>
 
-  <h2>Choose Your Avatar</h2>
-  <select id="avatarSelect">
-    <option value="🧍‍♀️">🧍‍♀️ Explorer</option>
-    <option value="🧗‍♀️">🧗‍♀️ Climber</option>
-    <option value="⛷️">⛷️ Skier</option>
-    <option value="🏐">🏐 Volleyballer</option>
-    <option value="⚾">⚾ Softballer</option>
-  </select>
-  <p>Selected Avatar: <span id="avatarDisplay">🧍‍♀️</span></p>
-
-  <h2>Climb Queen</h2>
-  <button onclick="startClimb()">Play Climb Queen</button>
-  <pre id="climbOutput"></pre>
-
-  <h2>Slalom Dash</h2>
-  <button onclick="startSki()">Play Slalom Dash</button>
-  <pre id="skiOutput"></pre>
-
-  <h2>Volley Rally</h2>
-  <button onclick="startVolley()">Play Volley Rally</button>
-  <pre id="volleyOutput"></pre>
-
-  <h2>Softball Smash</h2>
-  <button onclick="startSoftball()">Play Softball Smash</button>
-  <pre id="softballOutput"></pre>
+  <div class="section">
+    <h2>🎭 Choose Your Avatar</h2>
+    <select id="avatarSelect">
+      <option value="🧍‍♀️">🧍‍♀️ Explorer</option>
+      <option value="🧗‍♀️">🧗‍♀️ Climber</option>
+      <option value="⛷️">⛷️ Skier</option>
+      <option value="🏐">🏐 Volleyballer</option>
+      <option value="⚾">⚾ Softballer</option>
+    </select>
+    <p>Selected Avatar: <span id="avatarDisplay">🧍‍♀️</span></p>
+  </div>
 
   <script>
-    // Avatar picker
     const avatarDisplay = document.getElementById("avatarDisplay");
     document.getElementById("avatarSelect").addEventListener("change", function() {
       avatarDisplay.textContent = this.value;
     });
+  </script>
 
+  <div class="section">
+    <h2>🧗‍♀️ Climb Queen</h2>
+    <canvas id="climbCanvas" width="200" height="400"></canvas><br>
+    <button onclick="startClimb()">Climb!</button>
+  </div>
+
+  <div class="section">
+    <h2>⛷️ Slalom Dash</h2>
+    <canvas id="skiCanvas" width="300" height="400"></canvas><br>
+    <button onclick="startSki()">Start Skiing</button>
+  </div>
+
+  <div class="section">
+    <h2>🏐 Volley Rally</h2>
+    <canvas id="volleyCanvas" width="300" height="300"></canvas><br>
+    <button onclick="startVolley()">Start Volleyball</button>
+  </div>
+
+  <div class="section">
+    <h2>⚾ Softball Smash</h2>
+    <canvas id="softballCanvas" width="300" height="300"></canvas><br>
+    <button onclick="startSoftball()">Swing!</button>
+  </div>
+
+  <script>
     // Climb Queen
     function startClimb() {
-      let position = 0;
-      let output = document.getElementById("climbOutput");
-      output.textContent = "Climbing...\n";
-      let climb = setInterval(() => {
-        position += Math.random() * 10;
-        output.textContent += "You climbed to " + Math.floor(position) + " meters\n";
-        if (position >= 100) {
-          output.textContent += "You reached the top!";
+      const canvas = document.getElementById("climbCanvas");
+      const ctx = canvas.getContext("2d");
+      let y = 350;
+      const avatar = avatarDisplay.textContent;
+      document.onkeydown = e => {
+        if (e.key === "ArrowUp") y -= 30;
+      };
+      const climb = setInterval(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = "30px Arial";
+        ctx.fillText(avatar, 80, y);
+        y += 5;
+        if (y < 20) {
+          alert("You reached the top!");
           clearInterval(climb);
         }
-      }, 500);
+        if (y > 380) {
+          alert("You fell!");
+          clearInterval(climb);
+        }
+      }, 100);
     }
 
     // Slalom Dash
     function startSki() {
-      let time = 10;
-      let output = document.getElementById("skiOutput");
-      output.textContent = "Skiing...\n";
-      let ski = setInterval(() => {
-        time--;
-        output.textContent += "Dodged a tree!\n";
-        if (time <= 0) {
-          output.textContent += "You finished the run!";
-          clearInterval(ski);
+      const canvas = document.getElementById("skiCanvas");
+      const ctx = canvas.getContext("2d");
+      let skierX = 135;
+      let trees = [];
+      let timeLeft = 30;
+      const avatar = avatarDisplay.textContent;
+
+      document.onkeydown = e => {
+        if (e.key === "ArrowLeft") skierX -= 15;
+        if (e.key === "ArrowRight") skierX += 15;
+      };
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = "30px Arial";
+        ctx.fillText(avatar, skierX, 370);
+        trees.forEach(tree => {
+          tree.y += 5;
+          ctx.fillStyle = "green";
+          ctx.fillRect(tree.x, tree.y, 30, 30);
+          if (tree.y > 360 && Math.abs(tree.x - skierX) < 30) {
+            alert("You hit a tree!");
+            clearInterval(gameLoop);
+            clearInterval(timer);
+            clearInterval(treeSpawner);
+          }
+        });
+        trees = trees.filter(tree => tree.y < 400);
+      }
+
+      function spawnTree() {
+        trees.push({ x: Math.random() * 270, y: 0 });
+      }
+
+      const gameLoop = setInterval(draw, 100);
+      const treeSpawner = setInterval(spawnTree, 1000);
+      const timer = setInterval(() => {
+        timeLeft--;
+        if (timeLeft <= 0) {
+          alert("You survived the slope!");
+          clearInterval(gameLoop);
+          clearInterval(treeSpawner);
+          clearInterval(timer);
         }
       }, 1000);
     }
 
     // Volley Rally
     function startVolley() {
-      let hits = 0;
-      let output = document.getElementById("volleyOutput");
-      output.textContent = "Volleying...\n";
-      let volley = setInterval(() => {
-        hits++;
-        output.textContent += "Hit " + hits + "\n";
-        if (hits >= 20) {
-          output.textContent += "You win!";
+      const canvas = document.getElementById("volleyCanvas");
+      const ctx = canvas.getContext("2d");
+      let ballY = 150;
+      let ballSpeed = 3;
+      let score = 0;
+
+      const volley = setInterval(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.arc(150, ballY, 15, 0, Math.PI * 2);
+        ctx.fillStyle = "orange";
+        ctx.fill();
+        ctx.font = "20px Arial";
+        ctx.fillText("Score: " + score, 10, 20);
+        ballY += ballSpeed;
+        if (ballY > 285 || ballY < 15) {
+          ballSpeed *= -1;
+          score++;
+        }
+        if (score >= 20) {
+          alert("You win!");
           clearInterval(volley);
         }
-      }, 300);
+      }, 100);
     }
 
     // Softball Smash
     function startSoftball() {
-      let hits = 0;
-      let misses = 0;
-      let output = document.getElementById("softballOutput");
-      output.textContent = "Swinging...\n";
+      const canvas = document.getElementById("softballCanvas");
+      const ctx = canvas.getContext("2d");
+      let ballX = 0;
+      let hitCount = 0;
+      let missCount = 0;
+
       function pitch() {
-        let success = Math.random() > 0.5;
-        if (success) {
-          hits++;
-          output.textContent += "Hit!\n";
-        } else {
-          misses++;
-          output.textContent += "Miss!\n";
-        }
-        if (hits >= 5) {
-          output.textContent += "Home run!";
-        } else if (misses >= 3) {
-          output.textContent += "You're out!";
-        } else {
-          setTimeout(pitch, 1000);
-        }
-      }
-      pitch();
-    }
-  </script>
-</body>
-</html>
+        ballX = 0;
+        const pitchInterval = setInterval(() => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.beginPath();
+          ctx.arc(ballX, 150, 15, 0, Math.PI * 2);
+          ctx.fillStyle = "red";
+          ctx.fill();
+          ballX += 10;
+          if (ballX > 300) {
+            missCount++;
+            clearInterval(pitchInterval);
+            if (missCount >= 3) {
+              alert("You're out!");
+            } else {
+              pitch();
+            }
+          }
+        }, 100);
+
+        canvas.onclick = () => {
+          if (ballX > 100 && ballX < 200) {
+            hitCount++;
+            clearInterval(pitchInterval);
+            if (hitCount
