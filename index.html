@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Parker Champlin's Sports Hub</title>
+  <title>Parker's Preppy Sports Arcade</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+      background: linear-gradient(to bottom, #fdf6f9, #e0f7fa);
       margin: 0;
       padding: 0;
       color: #333;
     }
     header {
       text-align: center;
-      background-color: #1565c0;
+      background-color: #ff69b4;
       color: white;
       padding: 30px 20px;
     }
@@ -28,10 +28,10 @@
       padding: 20px;
       border: 2px solid #ccc;
       border-radius: 10px;
-      background: #f9f9f9;
+      background: #fff;
     }
     h2 {
-      color: #1565c0;
+      color: #ff69b4;
     }
     canvas {
       border: 2px solid #333;
@@ -47,87 +47,138 @@
       font-size: 40px;
       text-align: center;
     }
+    .instructions {
+      border: 2px dashed #ff69b4;
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #fff0f5;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Parker Champlin's Sports Hub</h1>
-    <p>Explore, play, and challenge yourself across four sports adventures!</p>
+    <h1>Parker's Preppy Sports Arcade 🎀</h1>
+    <p>Choose your avatar, play your fave sport, and slay the scoreboard 💅</p>
   </header>
 
   <main>
     <section>
-      <h2>🧍‍♂️ About Me</h2>
-      <p>Hi! I'm <strong>Parker Champlin</strong>, a multi-sport athlete with a passion for adventure and competition. Whether I’m scaling cliffs as a dedicated <strong>rock climber</strong>, carving through powder as a <strong>skier</strong>, diving for spikes in <strong>volleyball</strong>, or swinging for the fences in <strong>softball</strong>, I thrive on pushing my limits and embracing the outdoors.</p>
-      <p>I’m currently a student at <strong>Dexter Southfield</strong>, where I balance academics with my athletic pursuits. Outside of school and sports, I’m a proud older sibling to my amazing fifth-grade sister, <strong>Scarlett</strong>, who keeps me grounded and inspired. Our family wouldn’t be complete without <strong>Orca</strong>, our energetic black-and-white dog who’s always up for a trail run or a snowy romp.</p>
-      <p>This site is a celebration of the sports I love, the people who support me, and the adventures that shape who I am. Dive into the games below and get a taste of the action!</p>
+      <h2>💖 About Me</h2>
+      <p>Hii! I’m <strong>Parker Champlin</strong> — a sporty, sparkly college girl living life in full send 💅✨. I’m all about climbing higher 🧗, skiing faster ⛷️, serving aces 🏐, and hitting homers ⚾. I go to <strong>Dexter Southfield</strong>, where I balance my books and my backhands 🎓📚.</p>
+      <p>I’ve got a lil sis named <strong>Scarlett</strong> (she’s in 5th grade and totally adorable 🐣), and our fam wouldn’t be complete without <strong>Orca</strong>, my black-and-white fur baby 🐶🖤🤍. This site is my sporty sparkle zone — so pick your avatar, play your fave game, and slay the scoreboard 💖🎮.</p>
     </section>
 
     <section>
       <h2>🎭 Choose Your Avatar</h2>
       <select id="avatarSelect">
-        <option value="🧍‍♂️">🧍‍♂️ Explorer</option>
-        <option value="🧗">🧗 Climber</option>
+        <option value="🧍‍♀️">🧍‍♀️ Explorer</option>
+        <option value="🧗‍♀️">🧗‍♀️ Climber</option>
         <option value="⛷️">⛷️ Skier</option>
         <option value="🏐">🏐 Volleyballer</option>
         <option value="⚾">⚾ Softballer</option>
       </select>
-      <div class="avatar-preview">Selected Avatar: <span id="avatarDisplay">🧍‍♂️</span></div>
+      <div class="avatar-preview">Selected Avatar: <span id="avatarDisplay">🧍‍♀️</span></div>
     </section>
 
     <section>
-      <h2>🧗 Rock Climbing Game</h2>
+      <h2>🧗‍♀️ Climb Queen</h2>
+      <div class="instructions">
+        <h3>🎀 How to Play</h3>
+        <ul>
+          <li>Click "Climb!" to start</li>
+          <li>Use ↑ arrow to jump between holds</li>
+          <li>Reach the top to win — fall and it's game over!</li>
+        </ul>
+      </div>
       <canvas id="climbCanvas" width="300" height="400"></canvas>
       <button onclick="startClimb()">Climb!</button>
     </section>
 
     <section>
-      <h2>⛷️ Skiing Dodge Game</h2>
+      <h2>⛷️ Slalom Dash</h2>
+      <div class="instructions">
+        <h3>🎀 How to Play</h3>
+        <ul>
+          <li>Click "Start Skiing"</li>
+          <li>Use ← → arrows to dodge trees</li>
+          <li>Survive 30 seconds to win!</li>
+        </ul>
+      </div>
       <canvas id="skiCanvas" width="300" height="400"></canvas>
       <button onclick="startSki()">Start Skiing</button>
     </section>
 
     <section>
-      <h2>🏐 Volleyball Bounce Game</h2>
+      <h2>🏐 Volley Rally</h2>
+      <div class="instructions">
+        <h3>🎀 How to Play</h3>
+        <ul>
+          <li>Click "Start Volleyball"</li>
+          <li>Ball bounces — don’t let it drop!</li>
+          <li>Score 20 hits to win — miss and lose!</li>
+        </ul>
+      </div>
       <canvas id="volleyCanvas" width="300" height="300"></canvas>
       <button onclick="startVolley()">Start Volleyball</button>
     </section>
 
     <section>
-      <h2>⚾ Softball Swing Game</h2>
+      <h2>⚾ Softball Smash</h2>
+      <div class="instructions">
+        <h3>🎀 How to Play</h3>
+        <ul>
+          <li>Click "Swing!" to start</li>
+          <li>Ball flies in — click again to swing</li>
+          <li>Hit 5 balls to win — 3 misses = out!</li>
+        </ul>
+      </div>
       <canvas id="softballCanvas" width="300" height="300"></canvas>
       <button onclick="startSoftball()">Swing!</button>
     </section>
   </main>
 
   <script>
-    // Avatar selection
     const avatarDisplay = document.getElementById("avatarDisplay");
     document.getElementById("avatarSelect").addEventListener("change", function() {
       avatarDisplay.textContent = this.value;
     });
 
-    // Rock Climbing Game
+    // 🧗‍♀️ Climb Queen
     function startClimb() {
-      const ctx = document.getElementById("climbCanvas").getContext("2d");
-      ctx.clearRect(0, 0, 300, 400);
+      const canvas = document.getElementById("climbCanvas");
+      const ctx = canvas.getContext("2d");
       let y = 350;
+      let score = 0;
       const avatar = avatarDisplay.textContent;
+
+      document.addEventListener("keydown", e => {
+        if (e.key === "ArrowUp") y -= 30;
+      });
+
       const climb = setInterval(() => {
         ctx.clearRect(0, 0, 300, 400);
         ctx.font = "30px Arial";
         ctx.fillText(avatar, 140, y);
-        y -= 10;
-        if (y < 0) clearInterval(climb);
+        score++;
+        y += 5;
+        if (y < 20) {
+          alert("You reached the top! 👑");
+          clearInterval(climb);
+        }
+        if (y > 380) {
+          alert("You fell! 😢");
+          clearInterval(climb);
+        }
       }, 100);
     }
 
-    // Skiing Game
+    // ⛷️ Slalom Dash
     function startSki() {
       const canvas = document.getElementById("skiCanvas");
       const ctx = canvas.getContext("2d");
       let skierX = 135;
       let trees = [];
+      let time = 30;
       const avatar = avatarDisplay.textContent;
 
       document.addEventListener("keydown", e => {
@@ -143,6 +194,10 @@
           tree.y += 5;
           ctx.fillStyle = "green";
           ctx.fillRect(tree.x, tree.y, 30, 30);
+          if (tree.y > 360 && Math.abs(tree.x - skierX) < 30) {
+            alert("You hit a tree! 🌲 Game over.");
+            clearInterval(gameLoop);
+          }
         });
         trees = trees.filter(tree => tree.y < 400);
       }
@@ -151,50 +206,4 @@
         trees.push({ x: Math.random() * 270, y: 0 });
       }
 
-      setInterval(spawnTree, 1000);
-      setInterval(draw, 100);
-    }
-
-    // Volleyball Game
-    function startVolley() {
-      const canvas = document.getElementById("volleyCanvas");
-      const ctx = canvas.getContext("2d");
-      let ballY = 150, ballSpeed = 2;
-      const avatar = avatarDisplay.textContent;
-
-      function bounce() {
-        ctx.clearRect(0, 0, 300, 300);
-        ctx.font = "30px Arial";
-        ctx.fillText("🏐", 140, ballY);
-        ctx.fillText(avatar, 140, 280);
-        ballY += ballSpeed;
-        if (ballY > 270 || ballY < 30) ballSpeed *= -1;
-      }
-
-      setInterval(bounce, 50);
-    }
-
-    // Softball Game
-    function startSoftball() {
-      const canvas = document.getElementById("softballCanvas");
-      const ctx = canvas.getContext("2d");
-      let ballX = 0;
-      const avatar = avatarDisplay.textContent;
-
-      function swing() {
-        ctx.clearRect(0, 0, 300, 300);
-        ctx.font = "30px Arial";
-        ctx.fillText("⚾", ballX, 150);
-        ctx.fillText(avatar, 250, 150);
-        ballX += 10;
-        if (ballX > 240) {
-          ctx.fillText("💥", 250, 150);
-          clearInterval(hit);
-        }
-      }
-
-      const hit = setInterval(swing, 100);
-    }
-  </script>
-</body>
-</html>
+      const gameLoop = setInterval(()
