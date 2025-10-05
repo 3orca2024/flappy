@@ -1,215 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Parker’s Game Hub</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parker Champlin's Sports Hub</title>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #d7b8ff, #b699ff);
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #e0f7fa, #ffffff);
       margin: 0;
-      color: #222;
-      text-align: center;
+      padding: 0;
+      color: #333;
     }
     header {
-      background: #7d4bcc;
-      color: #fff;
-      padding: 15px;
-      border-bottom: 4px solid #5b31a1;
-    }
-    nav {
-      margin-top: 10px;
-    }
-    nav button {
-      background: white;
-      color: #5b31a1;
-      border: 2px solid #5b31a1;
-      padding: 10px 15px;
-      margin: 5px;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    nav button:hover {
-      background: #5b31a1;
+      text-align: center;
+      background-color: #1565c0;
       color: white;
+      padding: 30px 20px;
     }
-    canvas {
-      background: #f0f0f0;
-      border: 3px solid #7d4bcc;
-      border-radius: 10px;
-      display: block;
-      margin: 20px auto;
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
     }
     section {
-      display: none;
+      margin: 40px 0;
+      padding: 20px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      background: #f9f9f9;
     }
-    .active {
+    h2 {
+      color: #1565c0;
+    }
+    canvas {
+      border: 2px solid #333;
       display: block;
+      margin: 10px auto;
+    }
+    select, button {
+      font-size: 16px;
+      margin: 10px;
+      padding: 8px 12px;
+    }
+    .avatar-preview {
+      font-size: 40px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Parker’s Game Hub 🎮</h1>
-    <nav>
-      <button onclick="showSection('bio')">Bio</button>
-      <button onclick="showSection('climb')">Rock Climbing</button>
-      <button onclick="showSection('ski')">Skiing</button>
-      <button onclick="showSection('volley')">Volleyball</button>
-    </nav>
+    <h1>Parker Champlin's Sports Hub</h1>
+    <p>Explore, play, and challenge yourself across four sports adventures!</p>
   </header>
 
-  <!-- Bio Section -->
-  <section id="bio" class="active">
-    <h2>About Parker Champlin</h2>
-    <p>Hey there — I’m <strong>Parker Champlin</strong>. I go to <strong>Dexter</strong>, my favorite color is <strong>purple</strong>, and I have a dog named <strong>Orca</strong>.</p>
-    <p>I’m also on the <strong>USA Rock Climbing Team</strong>.</p>
-  </section>
+  <main>
+    <section>
+      <h2>🧍‍♂️ About Me</h2>
+      <p>Hi! I'm <strong>Parker Champlin</strong>, a multi-sport athlete with a passion for adventure and competition. Whether I’m scaling cliffs as a dedicated <strong>rock climber</strong>, carving through powder as a <strong>skier</strong>, diving for spikes in <strong>volleyball</strong>, or swinging for the fences in <strong>softball</strong>, I thrive on pushing my limits and embracing the outdoors.</p>
+      <p>I’m currently a student at <strong>Dexter Southfield</strong>, where I balance academics with my athletic pursuits. Outside of school and sports, I’m a proud older sibling to my amazing fifth-grade sister, <strong>Scarlett</strong>, who keeps me grounded and inspired. Our family wouldn’t be complete without <strong>Orca</strong>, our energetic black-and-white dog who’s always up for a trail run or a snowy romp.</p>
+      <p>This site is a celebration of the sports I love, the people who support me, and the adventures that shape who I am. Dive into the games below and get a taste of the action!</p>
+    </section>
 
-  <!-- Rock Climbing -->
-  <section id="climb">
-    <h2>Rock Climbing Game 🧗‍♀️</h2>
-    <canvas id="climbCanvas" width="400" height="600"></canvas>
-  </section>
+    <section>
+      <h2>🎭 Choose Your Avatar</h2>
+      <select id="avatarSelect">
+        <option value="🧍‍♂️">🧍‍♂️ Explorer</option>
+        <option value="🧗">🧗 Climber</option>
+        <option value="⛷️">⛷️ Skier</option>
+        <option value="🏐">🏐 Volleyballer</option>
+        <option value="⚾">⚾ Softballer</option>
+      </select>
+      <div class="avatar-preview">Selected Avatar: <span id="avatarDisplay">🧍‍♂️</span></div>
+    </section>
 
-  <!-- Skiing -->
-  <section id="ski">
-    <h2>Skiing Game 🎿</h2>
-    <p><strong>Modes:</strong> Press R for Racing ⛷️ or D for Dodging 🏔️</p>
-    <canvas id="skiCanvas" width="400" height="600"></canvas>
-  </section>
+    <section>
+      <h2>🧗 Rock Climbing Challenge</h2>
+      <canvas id="climbCanvas" width="300" height="400"></canvas>
+      <button onclick="startClimb()">Climb!</button>
+    </section>
 
-  <!-- Volleyball -->
-  <section id="volley">
-    <h2>Volleyball Game 🏐</h2>
-    <p><strong>Modes:</strong> Press B for Beach 🏖️ or I for Indoor 🏟️</p>
-    <canvas id="volleyCanvas" width="600" height="400"></canvas>
-  </section>
+    <section>
+      <h2>⛷️ Skiing Dodge Game</h2>
+      <canvas id="skiCanvas" width="300" height="400"></canvas>
+      <button onclick="startSki()">Start Skiing</button>
+    </section>
+
+    <section>
+      <h2>🏐 Volleyball Bounce Game</h2>
+      <canvas id="volleyCanvas" width="300" height="300"></canvas>
+      <button onclick="startVolley()">Start Volleyball</button>
+    </section>
+
+    <section>
+      <h2>⚾ Softball Swing Game</h2>
+      <canvas id="softballCanvas" width="300" height="300"></canvas>
+      <button onclick="startSoftball()">Swing!</button>
+    </section>
+  </main>
 
   <script>
-    // Section Toggle
-    function showSection(id) {
-      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    // Avatar selection
+    const avatarDisplay = document.getElementById("avatarDisplay");
+    document.getElementById("avatarSelect").addEventListener("change", function() {
+      avatarDisplay.textContent = this.value;
+    });
+
+    // Rock Climbing Game
+    function startClimb() {
+      const ctx = document.getElementById("climbCanvas").getContext("2d");
+      ctx.clearRect(0, 0, 300, 400);
+      let y = 350;
+      const avatar = avatarDisplay.textContent;
+      const climb = setInterval(() => {
+        ctx.clearRect(0, 0, 300, 400);
+        ctx.font = "30px Arial";
+        ctx.fillText(avatar, 140, y);
+        y -= 10;
+        if (y < 0) clearInterval(climb);
+      }, 100);
     }
 
-    // ROCK CLIMBING GAME
-    const climbCanvas = document.getElementById("climbCanvas");
-    const ctxC = climbCanvas.getContext("2d");
-    const colors = ["red","orange","yellow","green","blue","purple"];
-    let colorChoice = "red";
-    let avatar = { x:180, y:500, color:"blue" };
-    let holds = [], score = 0;
-    for(let i=0;i<60;i++){
-      holds.push({x:Math.random()*350,y:i*100-50,color:colors[Math.floor(Math.random()*6)]});
-    }
-    climbCanvas.addEventListener("click",e=>{
-      const rect = climbCanvas.getBoundingClientRect();
-      const x = e.clientX-rect.left, y = e.clientY-rect.top;
-      const hit = holds.find(h=>Math.hypot(h.x-x,h.y-y)<20);
-      if(hit){
-        if(hit.color===colorChoice){ avatar.y-=50; score++; }
-        else { avatar.y=500; score=0; }
-      }
-    });
-    function drawClimb(){
-      ctxC.clearRect(0,0,400,600);
-      ctxC.fillStyle="#bfbfbf"; ctxC.fillRect(0,0,400,600);
-      for(const h of holds){
-        ctxC.beginPath(); ctxC.arc(h.x,h.y,12,0,Math.PI*2);
-        ctxC.fillStyle=h.color; ctxC.fill();
-      }
-      ctxC.fillStyle=avatar.color;
-      ctxC.fillRect(avatar.x,avatar.y,20,40);
-      ctxC.fillStyle="#000"; ctxC.fillText("Score: "+score,10,20);
-      for(const h of holds) h.y+=1;
-      if(holds[holds.length-1].y>50){
-        holds.unshift({x:Math.random()*350,y:-100,color:colors[Math.floor(Math.random()*6)]});
-      }
-      requestAnimationFrame(drawClimb);
-    }
-    drawClimb();
+    // Skiing Game
+    function startSki() {
+      const canvas = document.getElementById("skiCanvas");
+      const ctx = canvas.getContext("2d");
+      let skierX = 135;
+      let trees = [];
+      const avatar = avatarDisplay.textContent;
 
-    // SKIING GAME
-    const skiCanvas=document.getElementById("skiCanvas");
-    const ctxS=skiCanvas.getContext("2d");
-    let skiMode="racing";
-    document.addEventListener("keydown",e=>{
-      if(e.key.toLowerCase()==="r") skiMode="racing";
-      if(e.key.toLowerCase()==="d") skiMode="dodging";
-    });
-    let skier={x:200,y:500};
-    let obstacles=[];
-    function newObstacle(){
-      obstacles.push({x:Math.random()*350+20,y:-50,type:Math.random()>0.5?"flag":"rock"});
-    }
-    function drawSki(){
-      ctxS.clearRect(0,0,400,600);
-      ctxS.fillStyle="#e0f7ff"; ctxS.fillRect(0,0,400,600);
-      ctxS.fillStyle="white";
-      ctxS.fillRect(0,580,400,20);
-      ctxS.fillStyle="black";
-      ctxS.fillText("Mode: "+skiMode,10,20);
-      ctxS.fillStyle="red";
-      ctxS.fillRect(skier.x,skier.y,20,40);
-      obstacles.forEach(o=>{
-        o.y+=3;
-        ctxS.beginPath();
-        ctxS.fillStyle=o.type==="flag"?"blue":"gray";
-        ctxS.arc(o.x,o.y,10,0,Math.PI*2);
-        ctxS.fill();
-        if(Math.abs(skier.x-o.x)<15&&Math.abs(skier.y-o.y)<30){ o.y=700; }
+      document.addEventListener("keydown", e => {
+        if (e.key === "ArrowLeft" && skierX > 0) skierX -= 15;
+        if (e.key === "ArrowRight" && skierX < 270) skierX += 15;
       });
-      if(Math.random()<0.02)newObstacle();
-      requestAnimationFrame(drawSki);
-    }
-    skiCanvas.addEventListener("mousemove",e=>{
-      const rect=skiCanvas.getBoundingClientRect();
-      skier.x=e.clientX-rect.left;
-    });
-    drawSki();
 
-    // VOLLEYBALL GAME
-    const volleyCanvas=document.getElementById("volleyCanvas");
-    const ctxV=volleyCanvas.getContext("2d");
-    let volleyMode="indoor";
-    document.addEventListener("keydown",e=>{
-      if(e.key.toLowerCase()==="b")volleyMode="beach";
-      if(e.key.toLowerCase()==="i")volleyMode="indoor";
-    });
-    let ball={x:300,y:200,dx:3,dy:-2};
-    function drawVolley(){
-      ctxV.clearRect(0,0,600,400);
-      ctxV.fillStyle=volleyMode==="beach"?"#ffeb99":"#c7d8ff";
-      ctxV.fillRect(0,0,600,400);
-      ctxV.fillStyle="#654321";
-      ctxV.fillRect(295,100,10,200); // net pole
-      ctxV.strokeStyle="white";
-      ctxV.beginPath();
-      for(let y=110;y<300;y+=15){
-        ctxV.moveTo(300,y); ctxV.lineTo(600,y);
-        ctxV.moveTo(300,y); ctxV.lineTo(0,y);
+      function draw() {
+        ctx.clearRect(0, 0, 300, 400);
+        ctx.font = "30px Arial";
+        ctx.fillText(avatar, skierX, 370);
+        trees.forEach(tree => {
+          tree.y += 5;
+          ctx.fillStyle = "green";
+          ctx.fillRect(tree.x, tree.y, 30, 30);
+        });
+        trees = trees.filter(tree => tree.y < 400);
       }
-      ctxV.stroke();
-      ctxV.beginPath();
-      ctxV.arc(ball.x,ball.y,10,0,Math.PI*2);
-      ctxV.fillStyle="white";
-      ctxV.fill();
-      ball.x+=ball.dx; ball.y+=ball.dy;
-      if(ball.x<10||ball.x>590)ball.dx*=-1;
-      if(ball.y<10||ball.y>390)ball.dy*=-1;
-      ctxV.fillStyle="black";
-      ctxV.fillText("Mode: "+volleyMode,10,20);
-      requestAnimationFrame(drawVolley);
+
+      function spawnTree() {
+        trees.push({ x: Math.random() * 270, y: 0 });
+      }
+
+      setInterval(spawnTree, 1000);
+      setInterval(draw, 100);
     }
-    drawVolley();
+
+    // Volleyball Game
+    function startVolley() {
+      const canvas = document.getElementById("volleyCanvas");
+      const ctx = canvas.getContext("2d");
+      let ballY = 150, ballSpeed = 2;
+      const avatar = avatarDisplay.textContent;
+
+      function bounce() {
+        ctx.clearRect(0, 0, 300, 300);
+        ctx.font = "30px Arial";
+        ctx.fillText("🏐", 140, ballY);
+        ctx.fillText(avatar, 140, 280);
+        ballY += ballSpeed;
+        if (ballY > 270 || ballY < 30) ballSpeed *= -1;
+      }
+
+      setInterval(bounce, 50);
+    }
+
+    // Softball Game
+    function startSoftball() {
+      const canvas = document.getElementById("softballCanvas");
+      const ctx = canvas.getContext("2d");
+      let ballX = 0;
+      const avatar = avatarDisplay.textContent;
+
+      function swing() {
+        ctx.clearRect(0, 0, 300, 300);
+        ctx.font = "30px Arial";
+        ctx.fillText("⚾", ballX, 150);
+        ctx.fillText(avatar, 250, 150);
+        ballX += 10;
+        if (ballX > 240) {
+          ctx.fillText("💥", 250, 150);
+          clearInterval(hit);
+        }
+      }
+
+      const hit = setInterval(swing, 100);
+    }
   </script>
 </body>
-</html>
-
 </html>
 
 
