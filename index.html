@@ -72,13 +72,6 @@
     <p>Selected Avatar: <span id="avatarDisplay">🧍‍♀️</span></p>
   </div>
 
-  <script>
-    const avatarDisplay = document.getElementById("avatarDisplay");
-    document.getElementById("avatarSelect").addEventListener("change", function() {
-      avatarDisplay.textContent = this.value;
-    });
-  </script>
-
   <div class="section">
     <h2>🧗‍♀️ Climb Queen</h2>
     <canvas id="climbCanvas" width="200" height="400"></canvas><br>
@@ -98,6 +91,12 @@
   </div>
 
   <script>
+    // Avatar picker
+    const avatarDisplay = document.getElementById("avatarDisplay");
+    document.getElementById("avatarSelect").addEventListener("change", function() {
+      avatarDisplay.textContent = this.value;
+    });
+
     // Climb Queen
     function startClimb() {
       const canvas = document.getElementById("climbCanvas");
