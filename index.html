@@ -7,7 +7,7 @@
   <h1>Parker's Sports Arcade</h1>
 
   <h2>About Me</h2>
-  <p>Hi! I'm Parker Champlin, a middle schooler who loves climbing, skiing, volleyball, and softball. This arcade has four games I made myself. Try them out and see how far you get!</p>
+  <p>Hi! I'm Parker Champlin, a middle schooler who loves climbing, skiing, volleyball, and softball. Try out my games below!</p>
 
   <h2>Choose Your Avatar</h2>
   <select id="avatarSelect">
@@ -20,20 +20,20 @@
   <p>Selected Avatar: <span id="avatarDisplay">🧍‍♀️</span></p>
 
   <h2>Climb Queen</h2>
-  <canvas id="climbCanvas" width="300" height="400"></canvas>
-  <button onclick="startClimb()">Climb!</button>
+  <button onclick="startClimb()">Play Climb Queen</button>
+  <pre id="climbOutput"></pre>
 
   <h2>Slalom Dash</h2>
-  <canvas id="skiCanvas" width="300" height="400"></canvas>
-  <button onclick="startSki()">Start Skiing</button>
+  <button onclick="startSki()">Play Slalom Dash</button>
+  <pre id="skiOutput"></pre>
 
   <h2>Volley Rally</h2>
-  <canvas id="volleyCanvas" width="300" height="300"></canvas>
-  <button onclick="startVolley()">Start Volleyball</button>
+  <button onclick="startVolley()">Play Volley Rally</button>
+  <pre id="volleyOutput"></pre>
 
   <h2>Softball Smash</h2>
-  <canvas id="softballCanvas" width="300" height="300"></canvas>
-  <button onclick="startSoftball()">Swing!</button>
+  <button onclick="startSoftball()">Play Softball Smash</button>
+  <pre id="softballOutput"></pre>
 
   <script>
     // Avatar picker
@@ -44,154 +44,74 @@
 
     // Climb Queen
     function startClimb() {
-      const ctx = document.getElementById("climbCanvas").getContext("2d");
-      let y = 350;
-      const avatar = avatarDisplay.textContent;
-      document.onkeydown = e => {
-        if (e.key === "ArrowUp") y -= 30;
-      };
-      const climb = setInterval(() => {
-        ctx.clearRect(0, 0, 300, 400);
-        ctx.font = "30px Arial";
-        ctx.fillText(avatar, 140, y);
-        y += 5;
-        if (y < 20) {
-          alert("You reached the top!");
+      let position = 0;
+      let output = document.getElementById("climbOutput");
+      output.textContent = "Climbing...\n";
+      let climb = setInterval(() => {
+        position += Math.random() * 10;
+        output.textContent += "You climbed to " + Math.floor(position) + " meters\n";
+        if (position >= 100) {
+          output.textContent += "You reached the top!";
           clearInterval(climb);
         }
-        if (y > 380) {
-          alert("You fell!");
-          clearInterval(climb);
-        }
-      }, 100);
+      }, 500);
     }
 
     // Slalom Dash
     function startSki() {
-      const canvas = document.getElementById("skiCanvas");
-      const ctx = canvas.getContext("2d");
-      let skierX = 135;
-      let trees = [];
-      let timeLeft = 30;
-      const avatar = avatarDisplay.textContent;
-
-      document.onkeydown = e => {
-        if (e.key === "ArrowLeft") skierX -= 15;
-        if (e.key === "ArrowRight") skierX += 15;
-      };
-
-      function draw() {
-        ctx.clearRect(0, 0, 300, 400);
-        ctx.font = "30px Arial";
-        ctx.fillText(avatar, skierX, 370);
-        trees.forEach(tree => {
-          tree.y += 5;
-          ctx.fillStyle = "green";
-          ctx.fillRect(tree.x, tree.y, 30, 30);
-          if (tree.y > 360 && Math.abs(tree.x - skierX) < 30) {
-            alert("You hit a tree!");
-            clearInterval(gameLoop);
-            clearInterval(timer);
-          }
-        });
-        trees = trees.filter(tree => tree.y < 400);
-      }
-
-      function spawnTree() {
-        trees.push({ x: Math.random() * 270, y: 0 });
-      }
-
-      const gameLoop = setInterval(draw, 100);
-      const treeSpawner = setInterval(spawnTree, 1000);
-      const timer = setInterval(() => {
-        timeLeft--;
-        if (timeLeft <= 0) {
-          alert("You survived the slope!");
-          clearInterval(gameLoop);
-          clearInterval(treeSpawner);
-          clearInterval(timer);
+      let time = 10;
+      let output = document.getElementById("skiOutput");
+      output.textContent = "Skiing...\n";
+      let ski = setInterval(() => {
+        time--;
+        output.textContent += "Dodged a tree!\n";
+        if (time <= 0) {
+          output.textContent += "You finished the run!";
+          clearInterval(ski);
         }
       }, 1000);
     }
 
     // Volley Rally
     function startVolley() {
-      const canvas = document.getElementById("volleyCanvas");
-      const ctx = canvas.getContext("2d");
-      let ballY = 150;
-      let ballSpeed = 3;
-      let score = 0;
-      const avatar = avatarDisplay.textContent;
-
-      const volley = setInterval(() => {
-        ctx.clearRect(0, 0, 300, 300);
-        ctx.beginPath();
-        ctx.arc(150, ballY, 15, 0, Math.PI * 2);
-        ctx.fillStyle = "orange";
-        ctx.fill();
-        ctx.font = "20px Arial";
-        ctx.fillText("Score: " + score, 10, 20);
-        ballY += ballSpeed;
-        if (ballY > 285 || ballY < 15) {
-          ballSpeed *= -1;
-          score++;
-        }
-        if (score >= 20) {
-          alert("You win!");
+      let hits = 0;
+      let output = document.getElementById("volleyOutput");
+      output.textContent = "Volleying...\n";
+      let volley = setInterval(() => {
+        hits++;
+        output.textContent += "Hit " + hits + "\n";
+        if (hits >= 20) {
+          output.textContent += "You win!";
           clearInterval(volley);
         }
-      }, 100);
+      }, 300);
     }
 
     // Softball Smash
     function startSoftball() {
-      const canvas = document.getElementById("softballCanvas");
-      const ctx = canvas.getContext("2d");
-      let ballX = 0;
-      let hitCount = 0;
-      let missCount = 0;
-      const avatar = avatarDisplay.textContent;
-
+      let hits = 0;
+      let misses = 0;
+      let output = document.getElementById("softballOutput");
+      output.textContent = "Swinging...\n";
       function pitch() {
-        ballX = 0;
-        const pitchInterval = setInterval(() => {
-          ctx.clearRect(0, 0, 300, 300);
-          ctx.beginPath();
-          ctx.arc(ballX, 150, 15, 0, Math.PI * 2);
-          ctx.fillStyle = "red";
-          ctx.fill();
-          ballX += 10;
-          if (ballX > 300) {
-            missCount++;
-            clearInterval(pitchInterval);
-            if (missCount >= 3) {
-              alert("You're out!");
-            } else {
-              pitch();
-            }
-          }
-        }, 100);
-
-        canvas.onclick = () => {
-          if (ballX > 100 && ballX < 200) {
-            hitCount++;
-            clearInterval(pitchInterval);
-            if (hitCount >= 5) {
-              alert("Home run!");
-            } else {
-              pitch();
-            }
-          }
-        };
+        let success = Math.random() > 0.5;
+        if (success) {
+          hits++;
+          output.textContent += "Hit!\n";
+        } else {
+          misses++;
+          output.textContent += "Miss!\n";
+        }
+        if (hits >= 5) {
+          output.textContent += "Home run!";
+        } else if (misses >= 3) {
+          output.textContent += "You're out!";
+        } else {
+          setTimeout(pitch, 1000);
+        }
       }
-
       pitch();
     }
   </script>
 </body>
 </html>
-
-        trees.push({ x: Math.random() * 270, y: 0 });
-      }
-
-      const gameLoop = setInterval(()
