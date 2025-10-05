@@ -3,54 +3,45 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Parker's Site — Games & Bio</title>
+  <title>Parker's Realistic Playground — Bio & Games</title>
   <style>
-    :root{
-      --bg:#f8f4ff; --accent:#6a2dbd; --muted:#6b6b6b; --card:#ffffff;
-      --glass: rgba(255,255,255,0.7);
-    }
+    :root{--bg:#f1eef9;--accent:#6a2dbd;--muted:#6b6b6b;--card:#ffffff}
     *{box-sizing:border-box}
-    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial; margin:0; background:linear-gradient(180deg,var(--bg),#fff); color:#222}
-    header{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:var(--card);box-shadow:0 6px 18px rgba(0,0,0,.06);position:sticky;top:0;z-index:50}
-    header h1{margin:0;font-size:18px;color:var(--accent)}
-    nav button{margin-left:10px;padding:8px 12px;border-radius:12px;border:0;background:transparent;font-weight:600;cursor:pointer}
-    main{padding:24px;max-width:1100px;margin:24px auto}
-    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;background:linear-gradient(180deg,var(--bg),#fff)}
+    header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:rgba(255,255,255,0.8);backdrop-filter:blur(6px);position:sticky;top:0;z-index:60}
+    header h1{margin:0;color:var(--accent);font-weight:700}
+    nav button{margin-left:10px;padding:8px 12px;border-radius:12px;border:0;background:transparent;font-weight:700;cursor:pointer}
+    main{max-width:1200px;margin:22px auto;padding:12px}
+    .layout{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .card{background:var(--card);border-radius:14px;padding:16px;box-shadow:0 8px 30px rgba(100,70,150,0.07)}
 
-    /* Bio card */
-    .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(90,60,120,.06)}
+    /* Bio */
     .bio h2{color:var(--accent);margin:0 0 8px}
     .bio p{margin:6px 0;color:var(--muted)}
 
     /* Games list */
-    .games-list{display:flex;flex-direction:column;gap:12px}
-    .game-tile{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbf8ff);cursor:pointer}
-    .game-tile:hover{transform:translateY(-3px);transition:all .18s}
-    .game-tile img{width:64px;height:64px;border-radius:8px;object-fit:cover}
+    .games-list{display:flex;flex-direction:column;gap:10px}
+    .game-tile{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbf8ff);cursor:pointer;border:1px solid rgba(110,80,200,0.06)}
+    .game-tile:hover{transform:translateY(-4px);transition:transform .18s}
 
-    /* right sidebar */
-    .sidebar .profile{display:flex;align-items:center;gap:12px}
-    .avatar-blob{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#7b4ef9,#c28bff);display:flex;align-items:center;justify-content:center;color:white;font-weight:800}
+    /* Play area */
+    .play-area{margin-top:16px}
+    .game-screen{width:100%;height:700px;border-radius:12px;background:linear-gradient(180deg,#e9e7ff,#ffffff);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    canvas{display:block}
 
-    /* Game canvas area */
-    .play-area{margin-top:18px}
-    .game-screen{width:100%;height:640px;border-radius:12px;background:linear-gradient(180deg,#e9e7ff,#fff);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-    canvas{background:transparent}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .controls button,.controls select{padding:8px 12px;border-radius:10px;border:1px solid #eee;background:white;cursor:pointer}
 
-    /* Controls */
-    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-    .controls select,.controls button{padding:8px 10px;border-radius:10px;border:1px solid #eee;background:white}
+    .sidebar .avatar-blob{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#7b4ef9,#c28bff);display:flex;align-items:center;justify-content:center;color:white;font-weight:800}
 
-    /* small helper */
-    .muted{color:var(--muted);font-size:13px}
+    .hud{position:absolute;left:12px;top:12px;background:rgba(255,255,255,0.85);padding:8px;border-radius:10px;border:1px solid #eee}
 
-    /* responsive */
-    @media(max-width:980px){.grid{grid-template-columns:1fr;}.game-screen{height:520px}}
+    @media(max-width:980px){.layout{grid-template-columns:1fr}.game-screen{height:520px}}
   </style>
 </head>
 <body>
   <header>
-    <h1>Parker's Fun Corner 💜</h1>
+    <h1>Parker's Realistic Playground 💜</h1>
     <nav>
       <button id="nav-bio">Bio</button>
       <button id="nav-games">Games</button>
@@ -60,35 +51,35 @@
 
   <main>
     <section id="page-bio" class="card bio">
-      <h2>Hi! I'm Parker.</h2>
+      <h2>Hi — I'm Parker.</h2>
       <p>My name is <strong>Parker</strong>. I go to <strong>Dexter</strong>. My favorite color is <strong>purple</strong> and I have a dog named <strong>Orca</strong>.</p>
-      <p class="muted">A little personal site made so I can show friends my bio and play 3 games: Rock-climb, Skiing and Volleyball.</p>
+      <p class="muted">This site is a mini-portfolio + 3 realistic canvas games that simulate physics, smooth animations, and responsive touch controls.</p>
     </section>
 
-    <div class="grid" style="margin-top:18px">
+    <div class="layout">
       <div>
         <div class="card">
-          <h3 style="margin:0 0 8px;color:var(--accent)">Games</h3>
+          <h3 style="margin:0 0 10px;color:var(--accent)">Games</h3>
           <div class="games-list">
             <div class="game-tile" data-game="rock">
-              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect rx='12' width='120' height='120' fill='%236a2dbd'/><text x='50%' y='58%' fill='white' font-size='20' font-family='Arial' text-anchor='middle'>Rock</text></svg>" alt="rock">
+              <svg width="64" height="64" viewBox="0 0 64 64" style="border-radius:8px"><rect rx="8" width="64" height="64" fill="#6a2dbd"/><text x="32" y="38" fill="#fff" font-size="12" font-family="sans-serif" text-anchor="middle">ROCK</text></svg>
               <div>
-                <strong>Rock Climbing</strong>
-                <div class="muted">Pick avatar &amp; a hold color. Drag touch/mouse between same-colored holds to climb.</div>
+                <strong>Rock Climb — Realistic</strong>
+                <div class="muted">Choose an avatar with harness, pick hold color, use precise dragging. Wrong color = fall animation.</div>
               </div>
             </div>
             <div class="game-tile" data-game="ski">
-              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect rx='12' width='120' height='120' fill='%2300a3ff'/><text x='50%' y='58%' fill='white' font-size='20' font-family='Arial' text-anchor='middle'>Ski</text></svg>" alt="ski">
+              <svg width="64" height="64" viewBox="0 0 64 64" style="border-radius:8px"><rect rx="8" width="64" height="64" fill="#00a3ff"/><text x="32" y="38" fill="#fff" font-size="12" font-family="sans-serif" text-anchor="middle">SKI</text></svg>
               <div>
-                <strong>Skiing</strong>
-                <div class="muted">Draw around cones. Avoid hits. Vertical scroll; harder every 50 coins.</div>
+                <strong>Skiing — Smooth Physics</strong>
+                <div class="muted">Vertical run with inertia, smooth turning, parallax background and realistic cone collision.</div>
               </div>
             </div>
             <div class="game-tile" data-game="volley">
-              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect rx='12' width='120' height='120' fill='%23ff7a59'/><text x='50%' y='58%' fill='white' font-size='18' font-family='Arial' text-anchor='middle'>Volley</text></svg>" alt="volley">
+              <svg width="64" height="64" viewBox="0 0 64 64" style="border-radius:8px"><rect rx="8" width="64" height="64" fill="#ff7a59"/><text x="32" y="38" fill="#fff" font-size="12" font-family="sans-serif" text-anchor="middle">VOLLEY</text></svg>
               <div>
-                <strong>Volleyball</strong>
-                <div class="muted">Play best-of-5 sets vs AI. Use serve/set/spike.</div>
+                <strong>Volleyball — Competitive</strong>
+                <div class="muted">Improved ball physics, trajectory prediction AI, coin-flip UI and set-based scoring (first to 5).</div>
               </div>
             </div>
           </div>
@@ -97,12 +88,12 @@
         <div class="card play-area" id="play-card" style="display:none">
           <div style="display:flex;justify-content:space-between;align-items:center">
             <h3 id="play-title" style="margin:0;color:var(--accent)">Play</h3>
-            <div class="muted">Coins: <span id="coin-count">0</span></div>
+            <div class="muted">Total Coins: <span id="coin-count">0</span></div>
           </div>
 
           <div class="controls" id="controls"></div>
           <div class="game-screen" id="game-screen">
-            <!-- canvas injected here per game -->
+            <div class="hud" id="hud">Ready</div>
           </div>
         </div>
 
@@ -110,15 +101,15 @@
 
       <aside class="sidebar">
         <div class="card">
-          <div class="profile">
+          <div style="display:flex;align-items:center;gap:12px">
             <div class="avatar-blob">P</div>
             <div>
-              <div style="font-weight:700">Parker</div>
-              <div class="muted">Dexter • loves purple • Orca 🐶</div>
+              <div style="font-weight:800">Parker</div>
+              <div class="muted">Dexter • purple • Orca 🐶</div>
             </div>
           </div>
           <hr style="margin:12px 0;border:none;border-top:1px dashed #eee">
-          <div class="muted">Quick picks</div>
+          <div class="muted">Quick tools</div>
           <div style="display:flex;gap:8px;margin-top:10px">
             <button id="btn-load-coins">Reset Coins</button>
             <button id="btn-reset-all">Reset All</button>
@@ -129,225 +120,251 @@
   </main>
 
   <script>
-    // Simple SPA nav
-    const pageBio = document.getElementById('page-bio');
-    const playCard = document.getElementById('play-card');
-    const gameScreen = document.getElementById('game-screen');
-    const controls = document.getElementById('controls');
-    const coinCountSpan = document.getElementById('coin-count');
+    // --------------------- App State ---------------------
+    const state = { coins: Number(localStorage.getItem('coins')||0), currentGame:null, rock:{avatar:0,color:'purple',score:0}, ski:{avatar:0,score:0}, volley:{avatar:0,left:0,right:0,setsLeft:5} };
+    const coinCountSpan = document.getElementById('coin-count'); coinCountSpan.textContent = state.coins;
 
-    let state = {
-      coins: Number(localStorage.getItem('coins')||0),
-      currentGame: null,
-      rock:{avatar:null,color:null,coins:0},
-      ski:{avatar:null,coins:0},
-      volley:{avatar:null,score:[0,0],sets:[],server:null}
-    };
-    coinCountSpan.textContent = state.coins;
+    // Navigation
+    document.getElementById('nav-bio').onclick = ()=>{document.getElementById('page-bio').style.display='block'; document.getElementById('play-card').style.display='none';}
+    document.getElementById('nav-games').onclick = ()=>{document.getElementById('page-bio').style.display='none'; document.getElementById('play-card').style.display='none';}
 
-    function showBio(){pageBio.style.display='block'; playCard.style.display='none'}
-    function showGames(){pageBio.style.display='none'; playCard.style.display='none'}
-    function showPlay(game){pageBio.style.display='none'; playCard.style.display='block'; loadGame(game)}
+    document.querySelectorAll('.game-tile').forEach(t=>t.addEventListener('click', ()=> startGame(t.dataset.game)));
+    document.getElementById('btn-load-coins').onclick = ()=>{state.coins=0;localStorage.setItem('coins',0);coinCountSpan.textContent=0}
+    document.getElementById('btn-reset-all').onclick = ()=>{if(confirm('Reset everything?')){localStorage.clear();location.reload();}}
 
-    document.getElementById('nav-bio').onclick=showBio;
-    document.getElementById('nav-games').onclick=showGames;
-    document.getElementById('nav-play').onclick=()=>{alert('Click a game tile on the left to start playing!')}
-
-    document.querySelectorAll('.game-tile').forEach(t=>t.addEventListener('click',()=>{showPlay(t.dataset.game)}));
-
-    document.getElementById('btn-load-coins').onclick=()=>{state.coins=0;localStorage.setItem('coins',0);coinCountSpan.textContent=0}
-    document.getElementById('btn-reset-all').onclick=()=>{if(confirm('Reset everything?')){localStorage.clear();location.reload();}}
-
-    // --- Game: Rock Climb ---
-    function makeRockGameControls(){
-      controls.innerHTML='';
-      const avatarLabel = document.createElement('div'); avatarLabel.textContent='Choose avatar:'; controls.appendChild(avatarLabel);
-      const avatars = ['Girl A','Girl B','Boy A','Boy B'];
-      avatars.forEach((name,i)=>{
-        const btn = document.createElement('button'); btn.textContent = name; btn.onclick=()=>{state.rock.avatar=i; updateControls();}
-        controls.appendChild(btn);
-      });
-      const colorLabel = document.createElement('div'); colorLabel.textContent='Choose hold color:'; colorLabel.style.marginLeft='8px'; controls.appendChild(colorLabel);
-      const colors = ['red','orange','yellow','green','blue','purple'];
-      colors.forEach(c=>{const b=document.createElement('button');b.textContent=c;b.onclick=()=>{state.rock.color=c; updateControls();};controls.appendChild(b)})
-      const start = document.createElement('button'); start.textContent='Start Rock Climb'; start.style.marginLeft='8px'; start.onclick=()=>startRock(); controls.appendChild(start);
-      updateControls();
+    function startGame(name){ document.getElementById('page-bio').style.display='none'; document.getElementById('play-card').style.display='block'; state.currentGame=name; document.getElementById('hud').textContent='Loading...';
+      document.getElementById('controls').innerHTML=''; document.getElementById('game-screen').querySelectorAll('canvas, .overlay-ui').forEach(n=>n.remove());
+      if(name==='rock'){ document.getElementById('play-title').textContent='Rock Climb — Realistic'; rockControls(); initRock(); }
+      if(name==='ski'){ document.getElementById('play-title').textContent='Skiing — Realistic'; skiControls(); initSki(); }
+      if(name==='volley'){ document.getElementById('play-title').textContent='Volleyball — Realistic'; volleyControls(); initVolley(); }
     }
 
-    function updateControls(){ /* highlight chosen */ }
-
-    function loadGame(game){
-      gameScreen.innerHTML=''; controls.innerHTML=''; state.currentGame = game;
-      if(game==='rock'){document.getElementById('play-title').textContent='Rock Climb'; makeRockGameControls(); createRockCanvas();}
-      if(game==='ski'){document.getElementById('play-title').textContent='Skiing'; makeSkiControls(); createSkiCanvas();}
-      if(game==='volley'){document.getElementById('play-title').textContent='Volleyball'; makeVolleyControls(); createVolleyCanvas();}
+    // Small helper: create SVG avatar with harness & shoes (more detail)
+    function avatarElement(type, scale=1){ const ns='http://www.w3.org/2000/svg'; const svg=document.createElementNS(ns,'svg'); svg.setAttribute('viewBox','0 0 120 120'); svg.setAttribute('width',Math.round(64*scale)); svg.setAttribute('height',Math.round(64*scale));
+      const skin = document.createElementNS(ns,'circle'); skin.setAttribute('cx',60); skin.setAttribute('cy',30); skin.setAttribute('r',14); skin.setAttribute('fill','#ffdbb7'); svg.appendChild(skin);
+      const torso = document.createElementNS(ns,'rect'); torso.setAttribute('x',40); torso.setAttribute('y',44); torso.setAttribute('width',40); torso.setAttribute('height',36); torso.setAttribute('rx',8); torso.setAttribute('fill','#6a2dbd'); svg.appendChild(torso);
+      const harness = document.createElementNS(ns,'path'); harness.setAttribute('d','M48 58 Q60 72 72 58 L72 78 Q60 88 48 78 Z'); harness.setAttribute('fill','#ffd36a'); harness.setAttribute('opacity','0.95'); svg.appendChild(harness);
+      const shoes = document.createElementNS(ns,'rect'); shoes.setAttribute('x',45); shoes.setAttribute('y',86); shoes.setAttribute('width',30); shoes.setAttribute('height',8); shoes.setAttribute('rx',3); shoes.setAttribute('fill','#222'); svg.appendChild(shoes);
+      return svg;
     }
 
-    // Utility: small SVG avatar maker (simple)
-    function makeAvatarSVG(kind){
-      // kind: 0..3 for rock; 0..5 for ski etc. We'll return a small HTML element
-      const wrap = document.createElement('div'); wrap.style.width='48px'; wrap.style.height='48px'; wrap.style.display='flex'; wrap.style.alignItems='center'; wrap.style.justifyContent='center';
-      const svgNS = 'http://www.w3.org/2000/svg';
-      const svg = document.createElementNS(svgNS,'svg'); svg.setAttribute('viewBox','0 0 64 64'); svg.setAttribute('width','48'); svg.setAttribute('height','48');
-      const circle = document.createElementNS(svgNS,'circle'); circle.setAttribute('cx','32'); circle.setAttribute('cy','16'); circle.setAttribute('r','10'); circle.setAttribute('fill','#ffdbb7'); svg.appendChild(circle);
-      const body = document.createElementNS(svgNS,'rect'); body.setAttribute('x','20'); body.setAttribute('y','26'); body.setAttribute('width','24'); body.setAttribute('height','24'); body.setAttribute('rx','6'); body.setAttribute('fill','#6a2dbd'); svg.appendChild(body);
-      const harness = document.createElementNS(svgNS,'rect'); harness.setAttribute('x','24'); harness.setAttribute('y','34'); harness.setAttribute('width','16'); harness.setAttribute('height','6'); harness.setAttribute('fill','#ffd36a'); svg.appendChild(harness);
-      const shoes = document.createElementNS(svgNS,'rect'); shoes.setAttribute('x','20'); shoes.setAttribute('y','50'); shoes.setAttribute('width','24'); shoes.setAttribute('height','6'); shoes.setAttribute('fill','#222'); svg.appendChild(shoes);
-      wrap.appendChild(svg); return wrap;
+    // ---------------- Rock Climb (more realistic) ----------------
+    function rockControls(){ const c=document.getElementById('controls'); c.innerHTML='';
+      const avatarWrap=document.createElement('div'); avatarWrap.style.display='flex'; avatarWrap.style.alignItems='center'; avatarWrap.style.gap='8px'; avatarWrap.textContent='Choose avatar:';
+      ['Girl 1','Girl 2','Boy 1','Boy 2'].forEach((n,i)=>{const b=document.createElement('button'); b.textContent=n; b.onclick=()=>{state.rock.avatar=i; updateHUD('Avatar: '+n)}; avatarWrap.appendChild(b)}); c.appendChild(avatarWrap);
+      const colorWrap=document.createElement('div'); colorWrap.style.display='flex'; colorWrap.style.alignItems='center'; colorWrap.style.gap='6px'; colorWrap.textContent=' Pick hold color:';
+      ['red','orange','yellow','green','blue','purple'].forEach(col=>{const btn=document.createElement('button'); btn.textContent=col; btn.onclick=()=>{state.rock.color=col; updateHUD('Hold color: '+col)}; colorWrap.appendChild(btn)}); c.appendChild(colorWrap);
+      const start = document.createElement('button'); start.textContent='Start Climb'; start.onclick=()=>{ initRock(true); }; c.appendChild(start);
     }
 
-    // --- ROCK GAME Implementation (Canvas) ---
-    function createRockCanvas(){
-      const canvas = document.createElement('canvas'); canvas.width = gameScreen.clientWidth; canvas.height = gameScreen.clientHeight; canvas.style.touchAction='none'; gameScreen.appendChild(canvas);
-      const ctx = canvas.getContext('2d');
-      let holds = []; // {x,y,color,hit}
-      let path = []; // user's touch path
-      let chosenColor = null;
-      let avatarIndex = state.rock.avatar||0;
-      let coins = 0;
-      let difficulty = 1; // increases
+    function updateHUD(txt){document.getElementById('hud').textContent = txt}
 
-      function resetHolds(){holds=[]; const cols = ['red','orange','yellow','green','blue','purple']; for(let r=0;r<6;r++){for(let c=0;c<6;c++){const x=50+c*(canvas.width-100)/5 + (Math.random()-0.5)*20; const y=30+r*(canvas.height-80)/5 + (Math.random()-0.5)*20; const color = cols[Math.floor(Math.random()*cols.length)]; holds.push({x,y,color,hit:false});}}}
-      resetHolds(); chosenColor = state.rock.color || 'purple';
+    function initRock(fromControl){ // enhanced climbing simulation
+      const screen = document.getElementById('game-screen'); screen.querySelectorAll('canvas, .overlay-ui').forEach(n=>n.remove());
+      const canvas=document.createElement('canvas'); canvas.width = screen.clientWidth; canvas.height = screen.clientHeight; canvas.style.touchAction='none'; screen.appendChild(canvas);
+      const ctx = canvas.getContext('2d'); ctx.imageSmoothingEnabled=true;
 
-      function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);
-        // background changes with difficulty
-        ctx.fillStyle = `rgba(120,80,200,${0.02*difficulty})`;
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-        // draw holds
-        holds.forEach(h=>{ctx.beginPath(); ctx.arc(h.x,h.y,14,0,Math.PI*2); ctx.fillStyle=h.color; ctx.fill(); if(h.hit){ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();}})
-        // draw avatar near bottom-left as indicator
-        ctx.fillStyle='#000'; ctx.font='14px sans-serif'; ctx.fillText('Avatar: '+avatarIndex,10,20);
-        // draw path
-        if(path.length>0){ctx.beginPath(); ctx.moveTo(path[0].x,path[0].y); for(let i=1;i<path.length;i++){ctx.lineTo(path[i].x,path[i].y);} ctx.lineWidth=4; ctx.strokeStyle='rgba(0,0,0,0.5)'; ctx.stroke();}
+      const cols = ['red','orange','yellow','green','blue','purple'];
+      let holds = []; // holds have positions, color, radius
+      let width = canvas.width, height = canvas.height;
+      function generateHolds(){ holds = []; const rows = 8; const colsCount = 6; for(let r=0;r<rows;r++){ for(let c=0;c<colsCount;c++){ const jitterX=(Math.random()-0.5)*40; const jitterY=(Math.random()-0.3)*30; const x = 60 + c*(width-120)/(colsCount-1) + jitterX; const y = height - 40 - r*(height-120)/(rows-1) + jitterY; const color = cols[Math.floor(Math.random()*cols.length)]; holds.push({x,y,color,r:16,claimed:false}); } } }
+      generateHolds();
+
+      // avatar position anchored to bottom-left initially
+      const avatar = {x:80,y:height-60, target:null, climbing:false, fallY:null};
+      let chosenColor = state.rock.color || 'purple';
+      let coins = 0; let difficulty=1;
+
+      // physics for fall simulation
+      let falling = false; let fallVel = 0;
+
+      function drawBackground(){ // subtle layered rock texture
+        const g=ctx.createLinearGradient(0,0,0,height); g.addColorStop(0,'#f4f2ff'); g.addColorStop(1,'#efe9ff'); ctx.fillStyle=g; ctx.fillRect(0,0,width,height);
+        // parallax streaks
+        for(let i=0;i<6;i++){ ctx.fillStyle = `rgba(120,80,200,${0.02*(i+1)})`; ctx.fillRect(i*80 - (difficulty%10)*2, i*30, width, 6); }
       }
 
-      function checkPath(){ // for each hold along path, check color
-        for(const h of holds){if(!h.hit){for(const p of path){const dx=p.x-h.x, dy=p.y-h.y; if(Math.hypot(dx,dy)<16){ if(h.color===chosenColor){h.hit=true; coins++; state.coins++; localStorage.setItem('coins',state.coins); coinCountSpan.textContent=state.coins; if(coins%50===0){difficulty++; canvas.style.backgroundColor='rgba(200,160,250,'+(Math.min(0.8,difficulty*0.05))+')'} } else { // wrong color touched: reset hits
-                    holds.forEach(h2=>h2.hit=false); coins=0; alert('Wrong color touched. You have to start over.'); }
-                break;}}}}
+      function drawHolds(){ for(const h of holds){ ctx.beginPath(); ctx.arc(h.x,h.y,h.r,0,Math.PI*2); // textured
+          ctx.fillStyle = h.color; ctx.shadowColor='rgba(0,0,0,0.12)'; ctx.shadowBlur=6; ctx.fill(); ctx.shadowBlur=0;
+          // highlight
+          ctx.beginPath(); ctx.arc(h.x-4,h.y-4,h.r*0.4,0,Math.PI*2); ctx.fillStyle='rgba(255,255,255,0.18)'; ctx.fill();
+          if(h.claimed){ ctx.strokeStyle='rgba(255,255,255,0.9)'; ctx.lineWidth=3; ctx.stroke(); }
+        } }
+
+      function drawAvatar(){ // simple body with harness line to a top anchor (rope)
+        // rope anchor at top center-ish
+        const anchorX = width/2; const anchorY = 10;
+        // rope
+        ctx.beginPath(); ctx.moveTo(anchorX,anchorY); ctx.lineTo(avatar.x,avatar.y-10); ctx.strokeStyle='rgba(80,80,80,0.5)'; ctx.lineWidth=2; ctx.stroke();
+        // body
+        ctx.beginPath(); ctx.arc(avatar.x,avatar.y-18,14,0,Math.PI*2); ctx.fillStyle='#ffdbb7'; ctx.fill();
+        ctx.fillStyle='#6a2dbd'; ctx.fillRect(avatar.x-12,avatar.y-6,24,28); // torso
+        // harness highlight
+        ctx.beginPath(); ctx.moveTo(avatar.x-10,avatar.y+6); ctx.lineTo(avatar.x,avatar.y+12); ctx.lineTo(avatar.x+10,avatar.y+6); ctx.fillStyle='#ffd36a'; ctx.fill();
       }
 
-      function animate(){draw(); requestAnimationFrame(animate);} animate();
-
-      // touch/mouse handling
-      let drawing=false;
-      function start(ev){drawing=true; path=[]; addPoint(ev);} function move(ev){ if(!drawing) return; addPoint(ev);} function end(ev){drawing=false; checkPath(); path=[]}
-      function addPoint(ev){const rect=canvas.getBoundingClientRect(); const x = (ev.touches?ev.touches[0].clientX:ev.clientX)-rect.left; const y = (ev.touches?ev.touches[0].clientY:ev.clientY)-rect.top; path.push({x,y});}
-
-      canvas.addEventListener('pointerdown',start); canvas.addEventListener('pointermove',move); window.addEventListener('pointerup',end);
-
-      // small UI inside the canvas area
-      const info = document.createElement('div'); info.style.position='absolute'; info.style.left='18px'; info.style.bottom='18px'; info.style.background='rgba(255,255,255,0.9)'; info.style.padding='8px'; info.style.borderRadius='10px'; info.style.fontSize='13px'; info.innerHTML=`Chosen color: <b>${chosenColor}</b> — Coins: <b>${coins}</b>`;
-      gameScreen.appendChild(info);
-
-      // update info every second
-      setInterval(()=>{info.innerHTML=`Chosen color: <b>${chosenColor}</b> — Coins: <b>${coins}</b>`},800);
-    }
-
-    // --- SKI GAME Implementation (Canvas) ---
-    function makeSkiControls(){controls.innerHTML=''; const avatars=['Skier Girl','Skier Boy','Snowboard Girl','Snowboard Boy','Skier2','Skier3']; avatars.forEach((a,i)=>{const b=document.createElement('button');b.textContent=a;b.onclick=()=>{state.ski.avatar=i;};controls.appendChild(b)}); const start=document.createElement('button'); start.textContent='Start Ski'; start.onclick=()=>createSkiCanvas(); controls.appendChild(start);}
-
-    function createSkiCanvas(){gameScreen.innerHTML=''; const canvas=document.createElement('canvas'); canvas.width=gameScreen.clientWidth; canvas.height=gameScreen.clientHeight; canvas.style.touchAction='none'; gameScreen.appendChild(canvas); const ctx=canvas.getContext('2d'); let path=[]; let cones=[]; let coins=0; let speed=1.2; let scroll=0; let avatar=state.ski.avatar||0;
-      function spawnCones(){ // spawn cones across width at various y positions (negative, moving upward)
-        for(let i=0;i<6;i++){const x=50+Math.random()*(canvas.width-100); const y=canvas.height+Math.random()*600; cones.push({x,y,size:18});}}
-      spawnCones();
-      function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);
-        // background
-        ctx.fillStyle='#eaf6ff'; ctx.fillRect(0,0,canvas.width,canvas.height);
-        // draw cones
-        cones.forEach(c=>{ctx.beginPath(); ctx.moveTo(c.x,c.y); ctx.lineTo(c.x-12,c.y+24); ctx.lineTo(c.x+12,c.y+24); ctx.closePath(); ctx.fillStyle='#ff8c42'; ctx.fill();});
-        // draw path
-        if(path.length){ctx.beginPath();ctx.moveTo(path[0].x,path[0].y); for(let i=1;i<path.length;i++)ctx.lineTo(path[i].x,path[i].y); ctx.lineWidth=5; ctx.strokeStyle='rgba(40,40,140,0.6)'; ctx.stroke();}
-        // HUD
-        ctx.fillStyle='#000'; ctx.fillText('Coins: '+coins,10,20);
+      function render(){ ctx.clearRect(0,0,width,height); drawBackground(); drawHolds(); drawAvatar(); // HUD coin
+        ctx.fillStyle='#111'; ctx.font='14px Inter, sans-serif'; ctx.fillText('Score: '+coins, 12, 26); ctx.fillText('Hold color: '+chosenColor, 12, 46);
       }
-      function update(dt){ // move cones upward (vertical screen moves up => cones move up)
-        for(const c of cones){c.y -= speed*dt*0.06;} // scale
-        if(cones.length<12) spawnCones(); // keep spawning
-      }
-      function checkCollision(){ // check if any path segment intersects cone
-        if(path.length<2) return;
-        for(const c of cones){for(let i=1;i<path.length;i++){const ax=path[i-1].x, ay=path[i-1].y, bx=path[i].x, by=path[i].y; // distance from cone to segment
-            const vx=bx-ax, vy=by-ay; const wx=c.x-ax, wy=c.y-ay; const proj = Math.max(0, Math.min(1, (vx*wx+vy*wy)/(vx*vx+vy*vy||1))); const px=ax+proj*vx, py=ay+proj*vy; const d=Math.hypot(px-c.x,py-c.y); if(d<18){ // hit
-                alert('You hit a cone — restart'); cones=[]; path=[]; coins=0; speed=1.2; return; } }
+
+      // Input handling: dragging between holds — we implement smoothing and color-checking
+      let pointerDown=false; let pointerPath=[];
+      function onPointerDown(e){ pointerDown=true; pointerPath=[]; addPoint(e); }
+      function onPointerMove(e){ if(!pointerDown) return; addPoint(e); }
+      function onPointerUp(e){ pointerDown=false; // evaluate path for holds
+        const touched = new Set(); for(const p of pointerPath){ for(const h of holds){ if(!h.claimed && Math.hypot(p.x-h.x,p.y-h.y) < h.r+6){ touched.add(h); } } }
+        // if any touched hold has wrong color -> fall
+        let wrong=false; for(const h of touched){ if(h.color !== chosenColor){ wrong=true; break; } }
+        if(wrong){ triggerFall(); } else { // claim in order nearest-to-top
+          const newClaim = Array.from(touched).sort((a,b)=>a.y-b.y); let gained=0; for(const h of newClaim){ if(!h.claimed){ h.claimed=true; gained++; coins++; state.coins++; localStorage.setItem('coins',state.coins); coinCountSpan.textContent=state.coins; }}
+          if(gained>0 && coins>0 && coins%50===0){ difficulty++; updateHUD('Difficulty increased!'); }
         }
-        // count cones passed (y < -20)
-        let passed = cones.filter(c=>c.y < -30).length; if(passed>0){coins += passed; state.coins += passed; localStorage.setItem('coins',state.coins); coinCountSpan.textContent = state.coins; cones = cones.filter(c=>c.y>=-40);}      }
+        pointerPath=[];
+      }
+      function addPoint(e){ const rect=canvas.getBoundingClientRect(); const x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left; const y=(e.touches?e.touches[0].clientY:e.clientY)-rect.top; pointerPath.push({x,y}); // move avatar slightly towards last point for realism
+        avatar.x += (x - avatar.x) * 0.12; avatar.y += (y - avatar.y) * 0.12; }
 
-      let last=performance.now(); function loop(t){const dt = t-last; last=t; update(dt); draw(); requestAnimationFrame(loop);} requestAnimationFrame(loop);
-
-      // input drawing
-      let drawing=false; function start(e){drawing=true; path=[]; add(e);} function move(e){ if(!drawing) return; add(e)} function end(e){drawing=false; checkCollision(); path=[]}
-      function add(e){const r=canvas.getBoundingClientRect(); const x=(e.touches?e.touches[0].clientX:e.clientX)-r.left; const y=(e.touches?e.touches[0].clientY:e.clientY)-r.top; path.push({x,y});}
-      canvas.addEventListener('pointerdown',start); canvas.addEventListener('pointermove',move); window.addEventListener('pointerup',end);
-    }
-
-    // --- VOLLEYBALL Implementation ---
-    function makeVolleyControls(){controls.innerHTML=''; const avatars=['Girl A','Girl B','Boy A','Boy B']; avatars.forEach((a,i)=>{const b=document.createElement('button');b.textContent=a;b.onclick=()=>{state.volley.avatar=i;};controls.appendChild(b)});
-      // coin flip chooser
-      const coinSelect=document.createElement('select'); const opt1=document.createElement('option'); opt1.value='heads'; opt1.textContent='Heads'; coinSelect.appendChild(opt1); const opt2=document.createElement('option'); opt2.value='tails'; opt2.textContent='Tails'; coinSelect.appendChild(opt2); controls.appendChild(coinSelect);
-      const start=document.createElement('button'); start.textContent='Start Match'; start.onclick=()=>createVolleyCanvas(coinSelect.value); controls.appendChild(start);
-    }
-
-    function createVolleyCanvas(coinChoice){gameScreen.innerHTML=''; const canvas=document.createElement('canvas'); canvas.width=gameScreen.clientWidth; canvas.height=gameScreen.clientHeight; gameScreen.appendChild(canvas); const ctx=canvas.getContext('2d');
-      // simple volleyball simulation with two players (left = player, right = AI) and ball physics
-      const netY = canvas.height/2; let ball = {x:canvas.width/2,y:canvas.height/3, vx:2, vy:2, r:12};
-      let leftScore=0,rightScore=0, serving = Math.random()<0.5? 'left':'right'; // but coinflip
-      // if user provided coinChoice, determine winner of flip
-      const flip = Math.random()<0.5? 'heads':'tails'; if(coinChoice){ if(flip===coinChoice){serving='left'} else serving='right'}
-      let leftPos = {x:canvas.width*0.25,y:canvas.height*0.75}; let rightPos={x:canvas.width*0.75,y:canvas.height*0.75};
-      let gameState = 'serve'; let setsLeft = 5; let leftSets=0,rightSets=0;
-
-      function draw(){ctx.clearRect(0,0,canvas.width,canvas.height); // court
-        ctx.fillStyle='#f7fbff'; ctx.fillRect(0,0,canvas.width,canvas.height);
-        // net
-        ctx.fillStyle='#222'; ctx.fillRect(canvas.width/2-4,0,8,canvas.height);
-        // ball
-        ctx.beginPath(); ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2); ctx.fillStyle='#ffcc00'; ctx.fill();
-        // players
-        ctx.fillStyle='#6a2dbd'; ctx.fillRect(leftPos.x-20,leftPos.y-40,40,40);
-        ctx.fillStyle='#ff6b6b'; ctx.fillRect(rightPos.x-20,rightPos.y-40,40,40);
-        // scores
-        ctx.fillStyle='#000'; ctx.font='20px sans-serif'; ctx.fillText(`${leftScore} — ${rightScore}`,canvas.width/2-20,40);
-        ctx.fillText(`Sets ${leftSets} : ${rightSets}`,10,40);
+      function triggerFall(){ falling = true; fallVel = -2; updateHUD('Wrong color! Fall...'); // clear claimed holds as penalty
+        holds.forEach(h=>h.claimed=false);
       }
 
-      function update(dt){ // simple physics
-        ball.vy += 0.12*dt*0.03; ball.x += ball.vx*dt*0.03; ball.y += ball.vy*dt*0.03;
-        // floor bounce
-        if(ball.y+ball.r>canvas.height){ ball.y=canvas.height-ball.r; ball.vy *= -0.5; }
-        // net collision
-        if(ball.x>canvas.width/2-6 && ball.x<canvas.width/2+6 && ball.y>0 && ball.y<canvas.height){ ball.vx *= -1; }
-        // scoring if ball hits ground on one side
-        if(ball.y+ball.r>canvas.height-10){ if(ball.x<canvas.width/2){ rightScore++; resetForServe('right'); } else { leftScore++; resetForServe('left'); }}
-
-        // simple AI: try to move to x of ball
-        rightPos.x += (ball.x - rightPos.x) * 0.05 * Math.min(1, dt/16);
+      function update(dt){ if(falling){ fallVel += 0.18*dt*0.03; avatar.y += fallVel*dt*0.03; if(avatar.y > height-30){ // landed
+            falling=false; avatar.y = height-60; fallVel = 0; updateHUD('Recovered — try again'); }
+        }
+        // gentle sway toward top if many claimed
+        const highestClaim = holds.reduce((m,h)=> h.claimed && h.y < (m||999) ? h.y : m, null);
+        if(highestClaim){} // could implement progress bar
       }
 
-      function serveFrom(side){ if(side==='left'){ball.x=leftPos.x+30; ball.y=leftPos.y-30; ball.vx=4; ball.vy=-5;} else {ball.x=rightPos.x-30; ball.y=rightPos.y-30; ball.vx=-4; ball.vy=-5;} }
-      function resetForServe(winner){ // winner gets next serve
-        if(winner==='left'){ serving='left'} else serving='right'; serveFrom(serving); }
-      serveFrom(serving);
+      let last = performance.now(); function loop(t){ const dt = t-last; last=t; update(dt); render(); requestAnimationFrame(loop); }
+      requestAnimationFrame(loop);
+
+      canvas.addEventListener('pointerdown', onPointerDown); canvas.addEventListener('pointermove', onPointerMove); window.addEventListener('pointerup', onPointerUp);
+
+      // responsive
+      window.addEventListener('resize', ()=>{ canvas.width = screen.clientWidth; canvas.height = screen.clientHeight; width=canvas.width; height=canvas.height; generateHolds(); });
+
+      updateHUD('Tap & drag across same-colored holds to climb. Wrong color = fall.');
+    }
+
+    // ---------------- Ski (more realistic) ----------------
+    function skiControls(){ const c=document.getElementById('controls'); c.innerHTML=''; const wrap=document.createElement('div'); wrap.textContent='Choose avatar:'; wrap.style.display='flex'; wrap.style.gap='8px'; ['Skier G','Skier B','Snowboard G','Snowboard B','Skier X','Skier Y'].forEach((n,i)=>{ const b=document.createElement('button'); b.textContent=n; b.onclick=()=>{state.ski.avatar=i; updateHUD('Avatar: '+n)}; wrap.appendChild(b); }); c.appendChild(wrap);
+      const start=document.createElement('button'); start.textContent='Start Run'; start.onclick=()=>initSki(true); c.appendChild(start);
+    }
+
+    function initSki(fromControl){ const screen=document.getElementById('game-screen'); screen.querySelectorAll('canvas, .overlay-ui').forEach(n=>n.remove());
+      const canvas=document.createElement('canvas'); canvas.width=screen.clientWidth; canvas.height=screen.clientHeight; canvas.style.touchAction='none'; screen.appendChild(canvas); const ctx=canvas.getContext('2d');
+      let width=canvas.width, height=canvas.height; let path=[]; let obstacles=[]; let coins=0; let speedBaseline=1.6; let distance=0; let difficulty=1;
+
+      function spawnObstacles(){ for(let i=0;i<8;i++){ const x=50+Math.random()*(width-100); const y=height + Math.random()*800; obstacles.push({x,y,r:18}); }}
+      spawnObstacles();
+
+      function draw(){ ctx.clearRect(0,0,width,height); // sky
+        const g=ctx.createLinearGradient(0,0,0,height); g.addColorStop(0,'#eaf6ff'); g.addColorStop(1,'#cfeaff'); ctx.fillStyle=g; ctx.fillRect(0,0,width,height);
+        // parallax mountains
+        for(let i=0;i<3;i++){ ctx.fillStyle = `rgba(140,170,220,${0.12/(i+1)})`; ctx.beginPath(); ctx.moveTo(-100 + (i*40), height*0.6 - i*30); ctx.lineTo(width/2, height*0.2 - i*10); ctx.lineTo(width+100, height*0.6 - i*30); ctx.closePath(); ctx.fill(); }
+        // obstacles (cones)
+        obstacles.forEach(o=>{ const y = o.y - distance; if(y < -40) return; ctx.beginPath(); ctx.moveTo(o.x, y); ctx.lineTo(o.x-12,y+24); ctx.lineTo(o.x+12,y+24); ctx.closePath(); ctx.fillStyle='#ff8c42'; ctx.fill(); });
+        // draw path smoothing
+        if(path.length>1){ ctx.beginPath(); ctx.moveTo(path[0].x,path[0].y); for(let i=1;i<path.length;i++){ ctx.lineTo(path[i].x,path[i].y); } ctx.strokeStyle='rgba(40,40,140,0.7)'; ctx.lineWidth=6; ctx.stroke(); }
+        // HUD
+        ctx.fillStyle='#000'; ctx.font='14px Inter, sans-serif'; ctx.fillText('Coins: '+coins, 12, 24);
+      }
+
+      function update(dt){ const sp = speedBaseline + difficulty*0.3; distance += sp * dt * 0.06; // move obstacles up
+        // check collisions between path and obstacles
+        if(path.length>1){ for(const o of obstacles){ const oy = o.y - distance; if(oy < -40) continue; for(let i=1;i<path.length;i++){ const ax=path[i-1].x, ay=path[i-1].y, bx=path[i].x, by=path[i].y; const vx=bx-ax, vy=by-ay; const wx=o.x-ax, wy=oy-ay; const proj = Math.max(0, Math.min(1, (vx*wx+vy*wy)/(vx*vx+vy*vy||1))); const px=ax+proj*vx, py=ay+proj*vy; const d = Math.hypot(px-o.x, py-oy); if(d < 18){ // collision
+                    alert('You hit a cone — run restart'); obstacles=[]; spawnObstacles(); path=[]; coins=0; distance=0; difficulty=1; return; } } // count passed obstacles
+            if(oy < -30){ coins++; state.coins++; localStorage.setItem('coins',state.coins); coinCountSpan.textContent = state.coins; o.y = height + Math.random()*600; } }
+        }
+        if(coins>0 && coins%50===0){ difficulty = 1 + Math.floor(coins/50); }
+      }
 
       let last = performance.now(); function loop(t){ const dt = t-last; last=t; update(dt); draw(); requestAnimationFrame(loop);} requestAnimationFrame(loop);
 
-      // simple touch controls: tap left half to move left player, perform gestures? We'll implement a basic tap to jump/spike
-      canvas.addEventListener('pointerdown', e=>{ const rect=canvas.getBoundingClientRect(); const x=e.clientX-rect.left; if(x<canvas.width/2){ // left control area
-          // jump and set ball if near
-          leftPos.y -= 80; setTimeout(()=>leftPos.y += 80,350);
-          const dx = ball.x-leftPos.x, dy=ball.y-leftPos.y; if(Math.hypot(dx,dy) < 80){ // hit
-            ball.vy = -6; ball.vx = 6; }
-        } else { // right side - optionally perform tactic (serve)
-          leftPos.x += (x - leftPos.x)*0.2;
-        }});
+      // input: draw path using pointer (smoothed)
+      let drawing=false; function start(e){ drawing=true; path = []; add(e);} function move(e){ if(!drawing) return; add(e)} function end(e){ drawing=false; path = smoothPath(path,6); }
+      function add(e){ const r=canvas.getBoundingClientRect(); const x=(e.touches?e.touches[0].clientX:e.clientX)-r.left; const y=(e.touches?e.touches[0].clientY:e.clientY)-r.top; path.push({x,y}); }
+      function smoothPath(p, tension){ if(p.length<3) return p; const res=[p[0]]; for(let i=1;i<p.length-1;i++){ const a = p[i-1], b = p[i], c = p[i+1]; const mx = (a.x + b.x)/2; const my = (a.y + b.y)/2; res.push({x:(mx + b.x)/2, y:(my + b.y)/2}); } res.push(p[p.length-1]); return res; }
 
+      canvas.addEventListener('pointerdown', start); canvas.addEventListener('pointermove', move); window.addEventListener('pointerup', end);
+      updateHUD('Draw a smooth line around cones. Avoid them.');
+
+      window.addEventListener('resize', ()=>{ canvas.width = screen.clientWidth; canvas.height = screen.clientHeight; width=canvas.width; height=canvas.clientHeight; });
     }
 
-    // initialize
-    showBio();
+    // ---------------- Volleyball (more realistic) ----------------
+    function volleyControls(){ const c=document.getElementById('controls'); c.innerHTML=''; const wrap=document.createElement('div'); wrap.textContent='Choose avatar:'; wrap.style.display='flex'; wrap.style.gap='8px'; ['Girl A','Girl B','Boy A','Boy B'].forEach((n,i)=>{ const b=document.createElement('button'); b.textContent=n; b.onclick=()=>{ state.volley.avatar=i; updateHUD('Avatar: '+n); }; wrap.appendChild(b); }); c.appendChild(wrap);
+      const coinLabel=document.createElement('div'); coinLabel.textContent='Choose coin side:'; coinLabel.style.marginTop='6px'; c.appendChild(coinLabel);
+      const coinFlipSelect=document.createElement('select'); ['heads','tails'].forEach(v=>{const o=document.createElement('option'); o.value=v; o.textContent=v; coinFlipSelect.appendChild(o)}); c.appendChild(coinFlipSelect);
+      const start=document.createElement('button'); start.textContent='Start Match'; start.onclick=()=>initVolley(coinFlipSelect.value); c.appendChild(start);
+    }
+
+    function initVolley(coinChoice){ const screen=document.getElementById('game-screen'); screen.querySelectorAll('canvas, .overlay-ui').forEach(n=>n.remove());
+      const canvas=document.createElement('canvas'); canvas.width=screen.clientWidth; canvas.height=screen.clientHeight; screen.appendChild(canvas); const ctx=canvas.getContext('2d');
+      let width=canvas.width, height=canvas.height; let leftScore=0, rightScore=0; let leftSets=0,rightSets=0; let serving=null; const flip = Math.random()<0.5? 'heads':'tails'; serving = (flip === coinChoice) ? 'left' : 'right';
+
+      // ball physics
+      let ball = {x:width/2,y:height/3,vx:0,vy:0,r:12,held:false};
+      // players
+      let left = {x:width*0.25,y:height*0.75, vy:0}; let right = {x:width*0.75,y:height*0.75, vy:0};
+      function draw(){ ctx.clearRect(0,0,width,height); // court
+        ctx.fillStyle='#f7fbff'; ctx.fillRect(0,0,width,height);
+        // net
+        ctx.fillStyle='#222'; ctx.fillRect(width/2-2,0,4,height);
+        // ball
+        ctx.beginPath(); ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2); ctx.fillStyle='#ffd36a'; ctx.fill(); ctx.strokeStyle='#d48c00'; ctx.stroke();
+        // players
+        ctx.fillStyle='#6a2dbd'; ctx.fillRect(left.x-20,left.y-40,40,40); ctx.fillStyle='#ff6b6b'; ctx.fillRect(right.x-20,right.y-40,40,40);
+        // scores
+        ctx.fillStyle='#000'; ctx.font='20px Inter, sans-serif'; ctx.fillText(`${leftScore} — ${rightScore}`, width/2-24, 36); ctx.fillText(`Sets ${leftSets} : ${rightSets}`, 12, 36);
+      }
+
+      function serveFrom(side){ if(side==='left'){ ball.x = left.x + 30; ball.y = left.y - 40; ball.vx = 5; ball.vy = -9; } else { ball.x = right.x - 30; ball.y = right.y - 40; ball.vx = -5; ball.vy = -9; } }
+      serveFrom(serving);
+
+      function update(dt){ // gravity
+        ball.vy += 0.3 * dt * 0.03; ball.x += ball.vx * dt * 0.03; ball.y += ball.vy * dt * 0.03;
+        // ground bounce and scoring
+        if(ball.y + ball.r > height){ if(ball.x < width/2){ rightScore++; scorePoint('right'); } else { leftScore++; scorePoint('left'); } }
+        // net collision
+        if(ball.x > width/2 - 10 && ball.x < width/2 + 10 && Math.abs(ball.y - height/2) < height/2){ ball.vx *= -1.05; }
+        // AI: simple predictive movement
+        const predictX = ball.x + (ball.vx * 30);
+        right.x += (predictX - right.x) * 0.08;
+      }
+
+      function scorePoint(winner){ // reset ball and maybe award set
+        updateHUD(winner + ' scored!'); if(winner==='left'){ leftScore++; } else { rightScore++; }
+        // check for set win (first to 5 per set)
+        if(leftScore >=5 || rightScore >=5){ if(leftScore>rightScore){ leftSets++; } else { rightSets++; } leftScore=0; rightScore=0; updateHUD('Set finished. Sets: '+leftSets+' - '+rightSets); if(leftSets===3 || rightSets===3){ updateHUD((leftSets>rightSets? 'Left wins match!': 'Right wins match!')); } }
+        // reset serve to winner
+        serving = (winner === 'left') ? 'left' : 'right'; serveFrom(serving);
+      }
+
+      let last = performance.now(); function loop(t){ const dt = t-last; last=t; update(dt); draw(); requestAnimationFrame(loop);} requestAnimationFrame(loop);
+
+      // controls: swipe on left to perform set/spike; tap left area to jump and hit
+      let pointerStart=null; canvas.addEventListener('pointerdown', e=>{ const r=canvas.getBoundingClientRect(); const x=e.clientX - r.left; const y=e.clientY - r.top; if(x < width/2){ pointerStart = {x,y,t:performance.now()}; left.y -= 70; setTimeout(()=>left.y += 70,350); // simple jump
+          // if near ball -> hit
+          if(Math.hypot(ball.x-left.x, ball.y-left.y) < 90){ // determine hit strength by swipe
+              ball.vy = -8; ball.vx = 6; }
+        } else { // right-side tap can nudge left player or serve target
+          left.x += (x - left.x) * 0.25; }
+      });
+
+      updateHUD('Coin flip: '+flip + '. Serving: '+serving+'. Tap left side to jump/hit.');
+
+      window.addEventListener('resize', ()=>{ canvas.width = screen.clientWidth; canvas.height = screen.clientHeight; width=canvas.width; height=canvas.height; });
+    }
+
+    // -------------------- End games --------------------
+
+    // Start on bio
+    document.getElementById('nav-bio').click();
+    function updateHUD(txt){ const hud=document.getElementById('hud'); hud.textContent=txt; setTimeout(()=>{ if(document.getElementById('hud')) document.getElementById('hud').textContent = 'Ready'; }, 3000); }
   </script>
 </body>
 </html>
+
 
