@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Parker's Preppy Sports Arcade</title>
+  <title>Parker's Preppy Sports Arcade 🎀</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #fdf6f9, #e0f7fa);
+      background: linear-gradient(to bottom, #fff0f5, #e0f7fa);
       margin: 0;
       padding: 0;
       color: #333;
@@ -64,7 +64,7 @@
   <main>
     <section>
       <h2>💖 About Me</h2>
-      <p>Hii! I’m <strong>Parker Champlin</strong> — a sporty, sparkly college girl living life in full send 💅✨. I’m all about climbing higher 🧗, skiing faster ⛷️, serving aces 🏐, and hitting homers ⚾. I go to <strong>Dexter Southfield</strong>, where I balance my books and my backhands 🎓📚.</p>
+      <p>Hii! I’m <strong>Parker Champlin</strong> — a sporty, sparkly, and totally blonde college girl living life in full send 💅✨. I’m all about climbing higher 🧗, skiing faster ⛷️, serving aces 🏐, and hitting homers ⚾. I go to <strong>Dexter Southfield</strong>, where I balance my books and my backhands 🎓📚 — blonde brainpower included.</p>
       <p>I’ve got a lil sis named <strong>Scarlett</strong> (she’s in 5th grade and totally adorable 🐣), and our fam wouldn’t be complete without <strong>Orca</strong>, my black-and-white fur baby 🐶🖤🤍. This site is my sporty sparkle zone — so pick your avatar, play your fave game, and slay the scoreboard 💖🎮.</p>
     </section>
 
@@ -143,13 +143,11 @@
       avatarDisplay.textContent = this.value;
     });
 
-    // 🧗‍♀️ Climb Queen
     function startClimb() {
-      const canvas = document.getElementById("climbCanvas");
-      const ctx = canvas.getContext("2d");
+      const ctx = document.getElementById("climbCanvas").getContext("2d");
       let y = 350;
-      let score = 0;
       const avatar = avatarDisplay.textContent;
+      let score = 0;
 
       document.addEventListener("keydown", e => {
         if (e.key === "ArrowUp") y -= 30;
@@ -159,8 +157,8 @@
         ctx.clearRect(0, 0, 300, 400);
         ctx.font = "30px Arial";
         ctx.fillText(avatar, 140, y);
-        score++;
         y += 5;
+        score++;
         if (y < 20) {
           alert("You reached the top! 👑");
           clearInterval(climb);
@@ -172,13 +170,12 @@
       }, 100);
     }
 
-    // ⛷️ Slalom Dash
     function startSki() {
       const canvas = document.getElementById("skiCanvas");
       const ctx = canvas.getContext("2d");
       let skierX = 135;
       let trees = [];
-      let time = 30;
+      let timeLeft = 30;
       const avatar = avatarDisplay.textContent;
 
       document.addEventListener("keydown", e => {
@@ -197,12 +194,21 @@
           if (tree.y > 360 && Math.abs(tree.x - skierX) < 30) {
             alert("You hit a tree! 🌲 Game over.");
             clearInterval(gameLoop);
+            clearInterval(timer);
           }
         });
         trees = trees.filter(tree => tree.y < 400);
       }
 
       function spawnTree() {
+        trees.push({ x: Math.random() * 270, y: 0 });
+      }
+
+      const gameLoop = setInterval(draw, 100);
+      const treeSpawner = setInterval(spawnTree, 1000);
+      const timer = setInterval(() => {
+        timeLeft--;
+        if (timeLeft <=
         trees.push({ x: Math.random() * 270, y: 0 });
       }
 
